@@ -9,14 +9,15 @@ def read_from_slow_disk(text_id: int) -> str:
     """
     print(f"Cache Miss! Lendo texto {text_id} do disco lento...")
     try:
-        with open(os.path.join(TEXTS_DIR, f"{text_id}.txt"), 'r', encoding='utf-8') as f:
+        with open(os.path.join(TEXTS_DIR, f"{text_id}.txt"), 'r', encoding='utf-8-sig') as f:
             content = f.read()
         # Simula a lentidão do disco forense [cite: 19, 296]
         time.sleep(0.5) # Atraso artificial de 0.5 segundos
         return content
     except FileNotFoundError:
         return f"Erro: Texto {text_id} não encontrado."
-
+    except Exception as e:
+        return f"Erro ao ler o arquivo: {e}"
 
 def run_simulation():
     """Placeholder para o modo de simulação a ser implementado pelo aluno D"""
