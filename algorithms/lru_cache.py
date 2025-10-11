@@ -8,8 +8,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from ra2_main import read_from_slow_disk
 
-#TODO: temos só que rever esse import da main, pq ele da loop de import e trava quando gente importa essa class na main, mas local funciona"""
-
 
 class LRUCache(Cache):
     """
@@ -46,7 +44,7 @@ class LRUCache(Cache):
             content = read_from_slow_disk(text_id)
 
             if len(self.cache) >= self.capacity:
-                # remove o item mais antigo (o primeiro do OrderedDict)
+                # Evicção: remove o item mais antigo (o primeiro do OrderedDict)
                 lru_item = self.cache.popitem(last=False)
                 print(f"Cache cheio. Evitando o texto {lru_item[0]} (LRU).")
 

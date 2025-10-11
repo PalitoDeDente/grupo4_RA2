@@ -1,9 +1,6 @@
 import time
 import os
 
-from core.cache_abc import Cache
-from algorithms.lru_cache import LRUCache
-
 TEXTS_DIR = "texts" # Diretório onde os 100 textos estão armazenados
 
 def read_from_slow_disk(text_id: int) -> str:
@@ -32,8 +29,7 @@ def run_simulation():
 def main():
     ## TODO: Aqui vamos instanciar o cache escolhido
     ## Por enquanto, vamos simular o comportamente sem um cache real
-    cache: Cache = LRUCache(capacity=10)
-    print("Usando algoritmo de cache: LRU")
+    print("Cache ainda não implementado. Todas as chamadas irão direto ao disco.")
 
     while True:
         try:
@@ -41,24 +37,20 @@ def main():
             text_id = int(user_input)
 
             if text_id == 0:
-                final_stats = cache.get_stats()
-                print("\n--- Estatísticas Finais da Sessão ---")
-                print(f"Cache Hits: {final_stats.hits}")
-                print(f"Cache Misses: {final_stats.misses}")
-                print(f"Tempo total de acesso (acumulado): {final_stats.total_access_time:.4f}s")
-                print("------------------------------------")
-                print("Encerrando o programa.")
+                print("Encerrando...")
                 break
             elif text_id == -1:
                 run_simulation()
             elif 1 <= text_id <= 100:
-                is_hit, content, access_time = cache.access(text_id)
+                start_time = time.time()
+                # Lógica de acesso (deve ser substituída pela chamada ao cache, aqui vai pegar direto)
+                content = read_from_slow_disk(text_id)
+                end_time = time.time()
 
-                hit_status = "HIT" if is_hit else "MISS"
-                print(f"\n--- Acesso ao Texto {text_id} (Cache {hit_status}) ---")
-                print(content[:500] + "..." if len(content) > 500 else content)
-                print("---------------------------------------")
-                print(f"Tempo de carregamento desta operação: {access_time:.4f} segundos.\n")
+                print("\n--- Conteúdo do Texto ---")
+                print(content[:500] + "..." if len(content) > 500 else content) # é pra mostrar um trecho apenas
+                print("--------------------------------")
+                print(f"Tempo de carregamento: {end_time - start_time:.4f} segundos. \n")
             else:
                 print("Entrada inválida. Por favor, digite um número entre 1 e 100 para leitura dos textos, -1 para simulação e 0 para encerrar o programa.\n")
         except ValueError:
