@@ -1,2 +1,23 @@
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+.meu_ambiente/
+
+# Cache e arquivos compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de configuração de IDEs e editores
+.vscode/
 .idea/
-.git/
+
+# Arquivo de ambiente (contém senhas, chaves de API, etc.)
+.env
+
+# Ignorar outros arquivos e pastas que começam com . (ponto)
+.*
+# Não ignorar o .gitignore
+!/.gitignore
