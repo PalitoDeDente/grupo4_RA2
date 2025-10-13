@@ -1,9 +1,12 @@
 import time
 import os
 from algorithms.lru_cache import LRUCache
+from algorithms.fifo import FIFOCache
+from algorithms.lfu import LFUCache
 from simulation.simulator import start_simulation_mode
 
 TEXTS_DIR = "texts"
+CONFIG_FILE = "cache_config.txt"
 
 def read_from_slow_disk(text_id: int) -> str:
     """
@@ -19,11 +22,35 @@ def read_from_slow_disk(text_id: int) -> str:
     except Exception as e:
         return f"Erro ao ler o arquivo: {e}"
 
+def load_cache_from_config(reader_func):
+    """
+    Lê o arquivo de configuração e retorna uma instância do cache escolhido.
+    Se o arquivo não existir, usa LRUCache como padrão.
+    """
+    try:
+        with open(CONFIG_FILE, 'r') as f:
+            algorithm_name = f.read().strip()
+    except FileNotFoundError:
+        print(f"Arquivo de configuração '{CONFIG_FILE}' não encontrado. Usando LRUCache como padrão.")
+        algorithm_name = "LRUCache"  # Padrão
+
+    print(f"Carregando algoritmo de cache: {algorithm_name}")
+
+    if algorithm_name == "FIFOCache":
+        return FIFOCache(capacity=10, reader_func=reader_func)
+    elif algorithm_name == "LFUCache":
+        return LFUCache(capacity=10, reader_func=reader_func)
+    elif algorithm_name == "LRUCache":
+        return LRUCache(capacity=10, reader_func=reader_func)
+    else:
+        print(f"Algoritmo '{algorithm_name}' desconhecido. Usando LRUCache como padrão.")
+        return LRUCache(capacity=10, reader_func=reader_func)
+
 def main():
     """
     Função principal que executa o laço de interação com o usuário.
     """
-    cache_em_uso = LRUCache(capacity=10, reader_func=read_from_slow_disk)
+    cache_em_uso = load_cache_from_config(read_from_slow_disk)
     print(f"Sistema iniciado com o cache: {type(cache_em_uso).__name__}")
     print("----------------------------------------------------")
 
