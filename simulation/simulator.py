@@ -92,6 +92,39 @@ def analyze_and_plot(all_results: list):
     plt.savefig('analise_misses_por_texto.png')
     print("Gráfico 'analise_misses_por_texto.png' gerado.")
 
+
+def analyze_and_save_best_algorithm(all_results: list):
+    """
+    Analisa os resultados para encontrar o melhor algoritmo e salva a escolha.
+    Critério: maior número total de cache hits.
+    """
+    if not all_results:
+        print("Nenhum resultado para analisar e salvar.")
+        return
+
+    df = pd.DataFrame(all_results)
+
+    # Agrupa por algoritmo e soma os hits (True = 1, False = 0)
+    hits_por_algoritmo = df.groupby('algorithm')['is_hit'].sum()
+
+    # Encontra o algoritmo com o maior número de hits
+    best_algorithm_name = hits_por_algoritmo.idxmax()
+
+    print("\n" + "=" * 50)
+    print("ANÁLISE DE PERFORMANCE FINAL")
+    print("=" * 50)
+    print(f"Total de Hits por Algoritmo:\n{hits_por_algoritmo}")
+    print(f"\nO melhor algoritmo foi: {best_algorithm_name}")
+
+    # Salva o nome do melhor algoritmo em um arquivo de configuração
+    try:
+        with open("cache_config.txt", "w") as f:
+            f.write(best_algorithm_name)
+        print(f"Configuração salva: '{best_algorithm_name}' foi definido como o cache padrão.")
+    except IOError as e:
+        print(f"Erro ao salvar o arquivo de configuração: {e}")
+    print("=" * 50)
+
 def start_simulation_mode(reader_func):
     """Função principal que orquestra o modo de simulação."""
     algorithms_to_test = [FIFOCache, LRUCache, LFUCache]
@@ -104,6 +137,12 @@ def start_simulation_mode(reader_func):
 
     # Substitua a chamada da função de plotagem pela de relatório
     # ANTES: analyze_and_plot(all_simulation_results)
+    # Gera os gráficos conforme solicitado no PDF
+    analyze_and_plot(all_simulation_results)
+
+    # Analisa e salva o melhor algoritmo para a próxima execução
+    analyze_and_save_best_algorithm(all_simulation_results)
+
     print_text_report(all_simulation_results) 
     
 def print_text_report(all_results: list):
