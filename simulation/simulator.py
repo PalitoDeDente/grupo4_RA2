@@ -69,7 +69,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Número Total de Hits')
     plt.xlabel('Algoritmo de Cache')
     plt.tight_layout()
-    plt.savefig('comparacao_hits.png')
+    plt.savefig('docs/comparacao_hits.png')
     print("Gráfico 'comparacao_hits.png' gerado.")
 
     plt.figure(figsize=(12, 7))
@@ -78,7 +78,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Tempo Médio de Acesso (s)')
     plt.xlabel('Algoritmo de Cache')
     plt.tight_layout()
-    plt.savefig('comparacao_tempo.png')
+    plt.savefig('docs/comparacao_tempo.png')
     print("Gráfico 'comparacao_tempo.png' gerado.")
 
     df_misses = df[(df['is_hit'] == False) & (df['pattern'] == 'Ponderado')]
@@ -90,7 +90,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Número de Misses')
     plt.xlabel('ID do Texto')
     plt.tight_layout()
-    plt.savefig('analise_misses_por_texto.png')
+    plt.savefig('docs/analise_misses_por_texto.png')
     print("Gráfico 'analise_misses_por_texto.png' gerado.")
 
 
@@ -119,7 +119,7 @@ def analyze_and_save_best_algorithm(all_results: list):
 
     # Salva o nome do melhor algoritmo em um arquivo de configuração
     try:
-        with open("cache_config.txt", "w") as f:
+        with open("docs/cache_config.txt", "w") as f:
             f.write(best_algorithm_name)
         print(f"Configuração salva: '{best_algorithm_name}' foi definido como o cache padrão.")
     except IOError as e:
@@ -153,10 +153,10 @@ def print_text_report(all_results: list):
         return
 
     df = pd.DataFrame(all_results)
-    
-    print("\n\n" + "="*50)
+
+    print("\n\n" + "=" * 50)
     print("RELATÓRIO DE PERFORMANCE DA SIMULAÇÃO DE CACHE")
-    print("="*50)
+    print("=" * 50)
 
     # Agrupa os dados por algoritmo e por padrão de acesso
     grouped = df.groupby(['algorithm', 'pattern'])
@@ -175,10 +175,10 @@ def print_text_report(all_results: list):
         print(f"  - Taxa de Acerto:   {hit_ratio:.2f}%")
         print(f"  - Tempo Médio de Acesso: {avg_time:.6f} segundos")
 
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print("ANÁLISE DE TEXTOS COM MAIS CACHE MISSES")
-    print("="*50)
-    
+    print("=" * 50)
+
     # Filtra apenas os misses e conta a ocorrência de cada text_id
     df_misses = df[df['is_hit'] == False]
     misses_per_text = df_misses['text_id'].value_counts().nlargest(10)
@@ -188,5 +188,5 @@ def print_text_report(all_results: list):
     else:
         print("Top 10 textos que mais causaram cache miss no geral:")
         print(misses_per_text)
-    
-    print("="*50)
+
+    print("=" * 50)
