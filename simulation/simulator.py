@@ -69,7 +69,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Número Total de Hits')
     plt.xlabel('Algoritmo de Cache')
     plt.tight_layout()
-    plt.savefig('docs/comparacao_hits.png')
+    plt.savefig('comparacao_hits.png')
     print("Gráfico 'comparacao_hits.png' gerado.")
 
     plt.figure(figsize=(12, 7))
@@ -78,7 +78,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Tempo Médio de Acesso (s)')
     plt.xlabel('Algoritmo de Cache')
     plt.tight_layout()
-    plt.savefig('docs/comparacao_tempo.png')
+    plt.savefig('comparacao_tempo.png')
     print("Gráfico 'comparacao_tempo.png' gerado.")
 
     df_misses = df[(df['is_hit'] == False) & (df['pattern'] == 'Ponderado')]
@@ -90,7 +90,7 @@ def analyze_and_plot(all_results: list):
     plt.ylabel('Número de Misses')
     plt.xlabel('ID do Texto')
     plt.tight_layout()
-    plt.savefig('docs/analise_misses_por_texto.png')
+    plt.savefig('analise_misses_por_texto.png')
     print("Gráfico 'analise_misses_por_texto.png' gerado.")
 
 
@@ -119,7 +119,7 @@ def analyze_and_save_best_algorithm(all_results: list):
 
     # Salva o nome do melhor algoritmo em um arquivo de configuração
     try:
-        with open("docs/cache_config.txt", "w") as f:
+        with open("cache_config.txt", "w") as f:
             f.write(best_algorithm_name)
         print(f"Configuração salva: '{best_algorithm_name}' foi definido como o cache padrão.")
     except IOError as e:
