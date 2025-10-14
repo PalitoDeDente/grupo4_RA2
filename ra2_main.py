@@ -77,12 +77,12 @@ def main():
                 print(content[:500] + "..." if len(content) > 500 else content)
                 print("--------------------------------")
                 print(f"Status do Cache: {'HIT' if is_hit else 'MISS'}")
-                print(f"Tempo de carregamento: {access_time:.4f} segundos.")
+                print(f"Tempo de carregamento: {access_time * 1e9:,.0f} nanossegundos.")
                 print(f"Estado atual do cache: {cache_em_uso}\n")
             else:
                 print("Entrada inválida.\n")
         except ValueError:
             print("Entrada inválida. Por favor, digite um número.\n")
-
+    
 if __name__ == "__main__":
     main()

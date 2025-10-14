@@ -107,7 +107,9 @@ class ARCCache(Cache):
         return is_hit, content, access_time
 
     def __str__(self) -> str:
-        """ Representação em string do estado do cache para depuração. """
-        return (f"T1 (Recentes): {list(self.t1.keys())}\n"
-                f"T2 (Frequentes): {list(self.t2.keys())}\n"
-                f"Alvo p: {self.p:.2f}")
+        """ Representação em string do estado do cache para a interface. """
+        # Une as chaves de T1 e T2 para uma visualização consolidada
+        all_keys = list(self.t1.keys()) + list(self.t2.keys())
+        items = ', '.join(map(str, all_keys))
+        return f"ARCCache (Size: {len(all_keys)}/{self.capacity}, p={self.p:.1f}) -> [{items}]"
+    

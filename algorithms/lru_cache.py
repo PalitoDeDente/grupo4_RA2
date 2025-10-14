@@ -43,6 +43,13 @@ class LRUCache(Cache):
         access_time = end_time - start_time
         self._total_access_time += access_time
         return is_hit, content, access_time
+    
+    # Em algorithms/lru_cache.py
+
+    def __str__(self) -> str:
+        """Retorna uma representação em string do estado atual do cache."""
+        items = ', '.join(map(str, self.cache.keys()))
+        return f"LRUCache (Size: {len(self.cache)}/{self.capacity}) -> [{items}]"
 
     def get_stats(self) -> CacheStats:
         return CacheStats(
