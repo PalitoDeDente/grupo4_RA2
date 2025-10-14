@@ -7,7 +7,7 @@ from algorithms.arc_cache import ARCCache
 from simulation.simulator import start_simulation_mode
 
 TEXTS_DIR = "texts"
-CONFIG_FILE = "cache_config.txt"
+CONFIG_FILE = "docs/cache_config.txt"
 
 def read_from_slow_disk(text_id: int) -> str:
     """
