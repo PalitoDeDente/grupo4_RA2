@@ -113,6 +113,24 @@ Para comparar os algoritmos de forma justa, o **Modo de Simulação** executa um
     * **Distribuição de Poisson:** Um padrão que tende a concentrar os acessos em torno de uma média, simulando um "pico" de interesse em certos textos.
     * **Ponderado:** Simula um cenário realista onde um grupo específico de textos (30 a 40) é muito mais popular, tendo 43% de chance de ser escolhido.
 
-## Análise dos Resultados da Simulação
+### 📊 Análise dos Resultados da Simulação
+A simulação expôs o comportamento de cada algoritmo sob diferentes cargas de trabalho. As principais observações foram:
 
-*Adicionar aqui uma analise breve de cada um dos algoritmos testados na simulação*
+Padrão de Cache Miss e Cache Hits: Notavelmente, em quase todos os testes, a maior concentração de cache misses e cache hits ocorreu nos textos numerados entre 30 e 40, como esperado, sendo uma consequência direta do design da nossa simulação, projetada para testar o comportamento dos algoritmos sob pressão.
+
+Análise por Performance (Total de Hits): 
+
+ARC: Demonstrou ser o algoritmo mais eficiente, alcançando o maior número total de cache hits na maioria dos cenários.
+
+LRU e FIFO: Apresentaram um desempenho muito similar entre si, posicionando-se como intermediários.
+
+LFU: Teve o pior desempenho geral, com um número de hits consistentemente inferior aos demais.
+
+Análise por Eficiência (Tempo Médio de Acesso):
+
+LFU: Novamente, registrou o pior resultado, com o maior tempo médio de acesso.
+
+ARC, LRU e FIFO: Tiveram performance similar, com destaque para a distribuição de Poisson, onde todos alcançaram seus menores tempos de acesso. O modo aleatório puro se mostrou o cenário mais desafiador para todos.
+
+Conclusão Parcial: O ARC Cache se destacou como o algoritmo mais equilibrado e robusto, oferecendo a melhor performance agregada tanto em número de acertos quanto em tempo de acesso.
+
