@@ -22,6 +22,7 @@ A aplicação implementa e compara o desempenho de três algoritmos de substitui
 * **Aluno C -  Ricardo Hey:**
     * Implementação do segundo algoritmo de substituição: **LRU** (Least Recently Used).
     * Integração e testes para validar a lógica e a performance do LRU.
+    * Implementação de um quarto algoritmo de substituição: **ARC** (Adaptive Replacement Cache).
 
 * **Aluno D - Eduardo Rodrigues Araujo de Oliveira:**
     * Implementação do terceiro algoritmo de substituição: **LFU** (Least Frequently Used).
@@ -74,3 +75,13 @@ Para rodar o programa, execute o arquivo principal a partir da raiz do projeto:
 
 ```bash
 python ra2_main.py
+```
+
+**Comandos disponíveis no terminal:**
+* **`1` a `100`:** Solicita um texto. O sistema mostrará se foi um *Cache Hit* (rápido) ou *Cache Miss* (lento).
+* **`-1`:** Inicia o **Modo de Simulação**. Os gráficos e relatórios serão gerados ao final.
+* **`0`:** Encerra a aplicação.
+
+## Análise dos Resultados da Simulação
+
+*Adicionar aqui uma analise breve de cada um dos algoritmos testados na simulação*
