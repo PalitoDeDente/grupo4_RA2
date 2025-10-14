@@ -83,10 +83,6 @@ def main():
                 print("Entrada inválida.\n")
         except ValueError:
             print("Entrada inválida. Por favor, digite um número.\n")
-def __str__(self) -> str:
-        """Retorna uma representação em string do estado atual do cache."""
-        items = ', '.join(map(str, self.cache.keys()))
-        return f"LRUCache (Size: {len(self.cache)}/{self.capacity}) -> [{items}]"
     
 if __name__ == "__main__":
     main()
