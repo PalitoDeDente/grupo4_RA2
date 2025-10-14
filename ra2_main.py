@@ -3,6 +3,7 @@ import os
 from algorithms.lru_cache import LRUCache
 from algorithms.fifo import FIFOCache
 from algorithms.lfu import LFUCache
+from algorithms.arc_cache import ARCCache
 from simulation.simulator import start_simulation_mode
 
 TEXTS_DIR = "texts"
@@ -40,6 +41,8 @@ def load_cache_from_config(reader_func):
         return FIFOCache(capacity=10, reader_func=reader_func)
     elif algorithm_name == "LFUCache":
         return LFUCache(capacity=10, reader_func=reader_func)
+    elif algorithm_name == "ARCCache":
+        return ARCCache(capacity=10, reader_func=reader_func)
     elif algorithm_name == "LRUCache":
         return LRUCache(capacity=10, reader_func=reader_func)
     else:

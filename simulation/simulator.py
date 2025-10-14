@@ -8,6 +8,7 @@ from core.cache_abc import Cache
 from algorithms.fifo import FIFOCache
 from algorithms.lru_cache import LRUCache
 from algorithms.lfu import LFUCache
+from algorithms.arc_cache import ARCCache
 
 def _pattern_pure_random() -> int:
     """Retorna um ID de texto de 1 a 100, com distribuição uniforme."""
@@ -127,7 +128,7 @@ def analyze_and_save_best_algorithm(all_results: list):
 
 def start_simulation_mode(reader_func):
     """Função principal que orquestra o modo de simulação."""
-    algorithms_to_test = [FIFOCache, LRUCache, LFUCache]
+    algorithms_to_test = [FIFOCache, LRUCache, LFUCache, ARCCache]
     all_simulation_results = []
 
     for cache_class in algorithms_to_test:
@@ -135,8 +136,6 @@ def start_simulation_mode(reader_func):
         results = run_single_simulation(cache_instance)
         all_simulation_results.extend(results)
 
-    # Substitua a chamada da função de plotagem pela de relatório
-    # ANTES: analyze_and_plot(all_simulation_results)
     # Gera os gráficos conforme solicitado no PDF
     analyze_and_plot(all_simulation_results)
 
