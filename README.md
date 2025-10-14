@@ -82,6 +82,37 @@ python ra2_main.py
 * **`-1`:** Inicia o **Modo de Simulação**. Os gráficos e relatórios serão gerados ao final.
 * **`0`:** Encerra a aplicação.
 
+## 🧠 Fundamentos Teóricos
+
+Esta seção detalha os conceitos centrais por trás do funcionamento do projeto.
+
+### Cache Rápido vs. Disco Lento
+
+O princípio fundamental deste projeto é a hierarquia de memória. No nosso sistema:
+* **O Disco Lento:** É simulado pela leitura dos arquivos na pasta `/texts/`. Adicionamos um atraso artificial (`time.sleep`) a essa leitura para emular a lentidão de um sistema de armazenamento físico, como um disco rígido ou um acesso remoto. Toda vez que ocorre um **"Cache Miss"**, somos forçados a acessar este meio lento.
+* **O Cache Rápido:** É simulado pelas estruturas de dados que implementamos em memória (dicionários, listas, etc.). Este cache tem um tamanho limitado (10 textos) e armazena os textos mais relevantes. O acesso à memória RAM é ordens de magnitude mais rápido que o acesso ao disco. Um **"Cache Hit"** significa que encontramos o texto aqui, resultando em um carregamento quase instantâneo para o usuário.
+
+O objetivo de um algoritmo de cache é gerenciar de forma inteligente o espaço limitado do cache rápido para maximizar o número de *hits* e minimizar o número de *misses*.
+
+### Algoritmos de Substituição Implementados
+
+Quando o cache está cheio e um novo texto precisa ser adicionado (após um *miss*), um texto existente deve ser removido. Esse processo é chamado de **evicção**. Cada algoritmo implementa uma política de evicção diferente:
+
+* **FIFO (First-In, First-Out):** É o algoritmo mais simples. Ele se comporta como uma fila. O primeiro texto que foi adicionado ao cache é o primeiro a ser removido, independentemente de quantas vezes ou quão recentemente ele foi acessado.
+* **LRU (Least Recently Used):** Este algoritmo remove o texto que não é acessado há mais tempo. A lógica é que, se um texto não foi usado recentemente, é provável que não seja usado novamente no futuro próximo. Ele mantém os textos "quentes" (usados recentemente) no cache.
+* **LFU (Least Frequently Used):** Remove o texto que foi acessado o menor número de vezes. A ideia é que textos "populares" (com alta frequência de acesso) são mais importantes de se manter no cache, mesmo que não tenham sido acessados muito recentemente.
+* **ARC (Adaptive Replacement Cache):** Um algoritmo mais avançado, o ARC é adaptativo: ele gerencia duas listas, uma com itens acessados recentemente (estilo LRU) e outra com itens acessados frequentemente (estilo LFU). Ele ajusta dinamicamente o tamanho dessas listas com base no padrão de acesso, tentando obter o melhor dos dois mundos e se adaptar a diferentes tipos de carga de trabalho.
+
+### O Modo de Simulação
+
+Para comparar os algoritmos de forma justa, o **Modo de Simulação** executa um teste automatizado e intensivo. Ele funciona da seguinte forma:
+1.  **Simulação de Usuários:** Simula 3 usuários distintos para cada algoritmo.
+2.  **Volume de Requisições:** Cada usuário faz 200 solicitações de textos, totalizando 600 requisições por algoritmo.
+3.  **Padrões de Acesso:** As solicitações são geradas seguindo três padrões distintos para testar a resiliência dos algoritmos:
+    * **Aleatório Puro:** Qualquer texto de 1 a 100 tem a mesma chance de ser escolhido.
+    * **Distribuição de Poisson:** Um padrão que tende a concentrar os acessos em torno de uma média, simulando um "pico" de interesse em certos textos.
+    * **Ponderado:** Simula um cenário realista onde um grupo específico de textos (30 a 40) é muito mais popular, tendo 43% de chance de ser escolhido.
+
 ## Análise dos Resultados da Simulação
 
 *Adicionar aqui uma analise breve de cada um dos algoritmos testados na simulação*
